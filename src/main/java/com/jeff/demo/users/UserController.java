@@ -14,7 +14,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/getusercontacts")
-    public User greeting(@RequestParam(value = "username", required = false) String name,
+    public User getUserContacts(@RequestParam(value = "username", required = false) String name,
             @RequestParam(value = "id", required = false) Long id) {
 
         //if both parameters not exist, return user with id=-1 
