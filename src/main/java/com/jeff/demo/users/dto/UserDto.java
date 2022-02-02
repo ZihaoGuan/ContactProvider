@@ -14,6 +14,10 @@ public class UserDto {
         this.id = id;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -21,6 +25,11 @@ public class UserDto {
                 ", email='" + email + '\'' +
                 ", phone=" + phone + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.id == ((UserDto) o).getId();
     }
 
 }

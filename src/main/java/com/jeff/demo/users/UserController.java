@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -21,30 +20,30 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/getusercontacts")
-    public UserDto getUserContacts(@RequestParam(value = "username", required = false) String name,
+    public UserDto getUserContacts(@RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "id", required = false) String id) {
 
-        // if both parameters not exist, return user with id=-1
-        if (id == null && name == null)
-            return userNotFound();
+        UserDto result = userNotFound();
 
-        // if both parameters are provided, return user with id=-1
-        if (id != null && name != null)
-            return userNotFound();
-
-        if (id != null){
+        if (id != null && username != null) {
             try {
-                return modelMapper.map(userService.getUserContactsById(Long.parseLong(id)), UserDto.class);
-            } catch (java.lang.NumberFormatException e){
+                UserDto result1 = modelMapper.map(userService.getUserContactsById(Long.parseLong(id)), UserDto.class);
+                UserDto result2 = modelMapper.map(userService.getUserContactsByUsername(username), UserDto.class);
+
+                result = result1.equals(result2) ? result1 : userNotFound();
+            } catch (java.lang.NumberFormatException e) {
                 logger.error("Request with invalid ID");
-                return userNotFound();
             }
-        }  
+        } else if (id != null) {
+            try {
+                result = modelMapper.map(userService.getUserContactsById(Long.parseLong(id)), UserDto.class);
+            } catch (java.lang.NumberFormatException e) {
+                logger.error("Request with invalid ID");
+            }
+        } else if (username != null)
+            result = modelMapper.map(userService.getUserContactsByUsername(username), UserDto.class);
 
-        if (name != null)
-            return modelMapper.map(userService.getUserContactsByUsername(name), UserDto.class);
-
-        return userNotFound();
+        return result;
     }
 
     private UserDto userNotFound() {

@@ -23,11 +23,19 @@ class UserControllerTest {
 	}
 
 	@Test
-	void getContacsWithBothParametersShouldGetUserNotFound() throws Exception {
+	void getContacsWithBothParameters() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 		.get("/getusercontacts?id=1&username=Bret"))
+		.andExpect(content().json("{'id':1,'email':'Sincere@april.biz','phone':'1-770-736-8031 x56442'}'"));
+	}
+
+	@Test
+	void getContacsWithBothParametersButNotMatch() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+		.get("/getusercontacts?id=1&username=Brett"))
 		.andExpect(content().json("{'id':-1,'email':null,'phone':null}"));
 	}
+
 
 	@Test
 	void getContacsByValidId() throws Exception {
