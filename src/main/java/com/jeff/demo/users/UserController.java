@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-	private ModelMapper modelMapper;
+    private ModelMapper modelMapper;
     @Autowired
     private UserService userService;
 
@@ -20,28 +20,24 @@ public class UserController {
     public UserDto getUserContacts(@RequestParam(value = "username", required = false) String name,
             @RequestParam(value = "id", required = false) Long id) {
 
-        //if both parameters not exist, return user with id=-1 
-        if (id == null && name == null) {
-            UserDto temp = new UserDto();
-            temp.setId(-1L);
-            return temp;
-        }
+        // if both parameters not exist, return user with id=-1
+        if (id == null && name == null)
+            return userNotFound();
 
-        //if both parameters are provided, return user with id=-1 
-        if (id != null && name != null) {
-            UserDto temp = new UserDto();
-            temp.setId(-1L);
-            return temp;
-        }
+        // if both parameters are provided, return user with id=-1
+        if (id != null && name != null)
+            return userNotFound();
 
-        if (id != null) {
+        if (id != null)
             return modelMapper.map(userService.getUserContactsById(id), UserDto.class);
-        }
 
-        if (name != null) {
+        if (name != null)
             return modelMapper.map(userService.getUserContactsByUsername(name), UserDto.class);
-        }
 
+        return userNotFound();
+    }
+
+    private UserDto userNotFound() {
         UserDto temp = new UserDto();
         temp.setId(-1L);
         return temp;
