@@ -38,7 +38,7 @@ public class UserService {
             users = mapper.readValue(result, User[].class);
             logger.info("Data fetched successfully.");
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Fail to fetch data.");
         }
         return users;
     }

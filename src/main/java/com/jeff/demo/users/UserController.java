@@ -24,7 +24,7 @@ public class UserController {
             @RequestParam(value = "id", required = false) String id) {
 
         UserDto result = userNotFound();
-
+        
         if (id != null && username != null) {
             try {
                 UserDto result1 = modelMapper.map(userService.getUserContactsById(Long.parseLong(id)), UserDto.class);
