@@ -3,8 +3,9 @@ package com.jeff.demo.users.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @ToString
 public class UserDto {
     private Long id;
     private String email;
@@ -16,15 +17,6 @@ public class UserDto {
 
     public Long getId() {
         return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", phone=" + phone + '\'' +
-                '}';
     }
 
     @Override

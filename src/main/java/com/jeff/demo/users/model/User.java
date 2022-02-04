@@ -3,8 +3,9 @@ package com.jeff.demo.users.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @ToString
 public class User {
     private Long id;
     private String name;
@@ -26,20 +27,5 @@ public class User {
     public String getUsername() {
         return this.username;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", website='" + website + '\'' +
-                ", address='" + address + '\'' +
-                ", Company='" + company + '\'' + 
-                '}';
-    }
-
 
 }
