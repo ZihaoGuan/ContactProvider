@@ -2,12 +2,11 @@ package com.jeff.demo.users;
 
 import java.util.Arrays;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeff.demo.users.model.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,20 +26,11 @@ public class UserService {
     }
 
     private User[] fetchUserContacts(){
-        User [] users = {};
-
         logger.info("Fetching data from third party API.");
         String uri = "https://jsonplaceholder.typicode.com/users";
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            users = mapper.readValue(result, User[].class);
-            logger.info("Data fetched successfully.");
-        } catch (JsonProcessingException e) {
-            logger.error("Fail to fetch data.");
-        }
-        return users;
+        ResponseEntity<User[]>  users = restTemplate.getForEntity(uri, User[].class);
+        return users.getBody();
     }
 
     private User userNotFound() {
