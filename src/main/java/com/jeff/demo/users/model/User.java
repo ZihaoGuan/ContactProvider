@@ -28,4 +28,12 @@ public class User {
         return this.username;
     }
 
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
 }

@@ -6,6 +6,7 @@ import com.jeff.demo.users.model.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +15,9 @@ import org.springframework.web.client.RestTemplate;
 public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
+    
+    @Autowired
+    private RestTemplate restTemplate;
 
     public User getUserContactsById(Long id) {
         User[] filteredUsers = Arrays.stream(fetchUserContacts()).filter(u -> u.getId() == id).toArray(User[]::new);
@@ -28,7 +32,6 @@ public class UserService {
     private User[] fetchUserContacts(){
         logger.info("Fetching data from third party API.");
         String uri = "https://jsonplaceholder.typicode.com/users";
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<User[]>  users = restTemplate.getForEntity(uri, User[].class);
         return users.getBody();
     }
